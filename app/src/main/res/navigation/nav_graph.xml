@@ -12,23 +12,38 @@
         tools:layout="@layout/fragment_breed_list" >
         <action
             android:id="@+id/action_breedListFragment_to_breedDetailsFragment"
-            app:destination="@id/breedDetailsFragment" />
+            app:destination="@id/breedDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
-        android:id="@+id/breedSearchFragment"
-        android:name="com.brunoponte.dogapp.ui.breedSearch.BreedSearchFragment"
-        android:label="BreedSearchFragment"
-        tools:layout="@layout/fragment_breed_search" >
+        android:id="@+id/breedSearchListFragment"
+        android:name="com.brunoponte.dogapp.ui.breedSearchList.BreedSearchListFragment"
+        android:label="BreedSearchListFragment"
+        tools:layout="@layout/fragment_breed_search_list" >
         <action
-            android:id="@+id/action_breedSearchFragment_to_breedDetailsFragment"
-            app:destination="@id/breedDetailsFragment" />
+            android:id="@+id/action_breedSearchListFragment_to_breedDetailsFragment"
+            app:destination="@id/breedDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
         android:id="@+id/breedDetailsFragment"
         android:name="com.brunoponte.dogapp.ui.breedDetails.BreedDetailsFragment"
         android:label="BreedDetailsFragment"
-        tools:layout="@layout/fragment_breed_details" />
+        tools:layout="@layout/fragment_breed_details" >
+
+        <argument
+            android:name="breedId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+
+    </fragment>
 
 </navigation>

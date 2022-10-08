@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class BreedDto (
 
     @SerializedName("id")
-    val id: Long,
+    val id: Int,
 
     @SerializedName("name")
     val name: String?,

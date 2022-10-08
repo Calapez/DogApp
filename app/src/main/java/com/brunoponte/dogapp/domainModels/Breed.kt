@@ -2,7 +2,7 @@ package com.brunoponte.dogapp.domainModels
 
 
 data class Breed (
-    val id: Long,
+    val id: Int,
     val name: String?,
     val bredFor: String?,
     val breedGroup: String?,

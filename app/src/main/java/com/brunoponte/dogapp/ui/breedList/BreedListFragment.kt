@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -68,9 +69,8 @@ class BreedListFragment : Fragment(), BreedListInteraction {
     }
 
     override fun onClick(position: Int, breed: Breed) {
-        // Navigate to Details Fragment
-        //val action = ReposFragmentDirections.actionReposFragmentToRepoDetailsFragment(repo.id ?: -1)
-        //findNavController().navigate(action)
+        val action = BreedListFragmentDirections.actionBreedListFragmentToBreedDetailsFragment(breed.id)
+        findNavController().navigate(action)
     }
 
     override fun onIndexReached(index: Int) {
