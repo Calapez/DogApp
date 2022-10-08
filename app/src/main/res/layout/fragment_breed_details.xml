@@ -10,14 +10,13 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:cardCornerRadius="2dp"
+    app:cardCornerRadius="6dp"
     app:cardElevation="6dp"
     app:cardUseCompatPadding="true">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,24 +24,23 @@
             android:layout_height="wrap_content" >
 
             <ImageView
-                android:id="@+id/dogImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:id="@+id/breedImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="10dp"
                 android:contentDescription="Dog Photo"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 tools:src="@color/teal_200"/>
 
             <TextView
-                android:id="@+id/dogNameText"
+                android:id="@+id/breedNameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dogImage"
+                app:layout_constraintTop_toBottomOf="@id/breedImage"
                 android:layout_marginTop="20dp"
                 android:layout_marginHorizontal="20dp"
                 android:gravity="center_horizontal"
@@ -50,67 +48,75 @@
                 android:ellipsize="end"
                 android:textSize="20sp"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                tools:text="Dog Breed"/>
+                tools:text="This is a very long breed name"/>
 
             <TextView
-                android:id="@+id/dogLoginText"
+                android:id="@+id/breedGroupLabelText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/dogNameText"
-                android:layout_marginTop="10dp"
-                android:layout_marginHorizontal="20dp"
-                android:gravity="center"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:textSize="14sp"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-                tools:text="By Bruno Ponte"/>
-
-            <TextView
-                android:id="@+id/dogDescriptionLabelText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/dogLoginText"
-                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/breedNameText"
+                android:layout_marginTop="25dp"
                 android:layout_marginHorizontal="20dp"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textSize="16sp"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                android:text="ABCDEFGH"/>
+                android:text="Group"/>
 
             <TextView
-                android:id="@+id/dogDescriptionText"
+                android:id="@+id/breedGroupText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/dogDescriptionLabelText"
+                app:layout_constraintTop_toBottomOf="@id/breedGroupLabelText"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="20dp"
                 android:textSize="14sp"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-                tools:text="Uma descrição muito muito grande"/>
+                tools:text="This is a very long breed category"/>
 
             <TextView
-                android:id="@+id/dogLanguageLabelText"
+                android:id="@+id/breedOriginLabelText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/dogDescriptionText"
+                app:layout_constraintTop_toBottomOf="@id/breedGroupText"
                 android:layout_marginTop="20dp"
                 android:layout_marginHorizontal="20dp"
                 android:textSize="16sp"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                android:text="2882812u101290"/>
+                android:text="Origin"/>
 
             <TextView
-                android:id="@+id/dogLanguageText"
+                android:id="@+id/breedOriginText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/dogLanguageLabelText"
+                app:layout_constraintTop_toBottomOf="@id/breedOriginLabelText"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="20dp"
                 android:textSize="14sp"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-                tools:text="Uma descrição muito muito grande"/>
+                tools:text="This is a very long breed origin"/>
+
+            <TextView
+                android:id="@+id/breedTemperamentLabelText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/breedOriginText"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:textSize="16sp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:text="Temperament"/>
+
+            <TextView
+                android:id="@+id/breedTemperamentText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/breedTemperamentLabelText"
+                android:layout_marginTop="5dp"
+                android:layout_marginHorizontal="20dp"
+                android:textSize="14sp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+                tools:text="This is a very long breed temperament"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
