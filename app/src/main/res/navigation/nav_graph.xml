@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/breedListFragment">
+
+    <fragment
+        android:id="@+id/breedListFragment"
+        android:name="com.brunoponte.dogapp.ui.breedList.BreedListFragment"
+        android:label="BreedListFragment"
+        tools:layout="@layout/fragment_breed_list" >
+        <action
+            android:id="@+id/action_breedListFragment_to_breedDetailsFragment"
+            app:destination="@id/breedDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/breedSearchFragment"
+        android:name="com.brunoponte.dogapp.ui.breedSearch.BreedSearchFragment"
+        android:label="BreedSearchFragment"
+        tools:layout="@layout/fragment_breed_search" >
+        <action
+            android:id="@+id/action_breedSearchFragment_to_breedDetailsFragment"
+            app:destination="@id/breedDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/breedDetailsFragment"
+        android:name="com.brunoponte.dogapp.ui.breedDetails.BreedDetailsFragment"
+        android:label="BreedDetailsFragment"
+        tools:layout="@layout/fragment_breed_details" />
+
+</navigation>
