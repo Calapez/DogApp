@@ -53,6 +53,8 @@ class BreedDetailsFragment : Fragment() {
 
             Glide.with(this)
                 .load(String.format(Util.dogImageApiUrlTemplate, breed.referenceImageId))
+                .placeholder(R.drawable.ic_loading)
+                .error(R.drawable.ic_no_image)
                 .into(binding.breedImage)
 
             binding.breedNameText.text = breed.name ?: notApplicableText

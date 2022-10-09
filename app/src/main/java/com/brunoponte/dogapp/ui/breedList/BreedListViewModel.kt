@@ -35,7 +35,7 @@ constructor(
 
         CoroutineScope(Dispatchers.IO).launch {
             isLoading.postValue(true)
-            val result = breedRepository.getBreeds(PAGE_SIZE, 0, getSortModeString(sortMode.value!!))
+            val result = breedRepository.getBreeds(PAGE_SIZE, 0, sortMode.value!!)
             page += 1
             isLoading.postValue(false)
 
@@ -75,7 +75,7 @@ constructor(
 
                 // Prevents this to be called on first page load
                 if (page > 0) {
-                    val result = breedRepository.getBreeds(PAGE_SIZE, page, getSortModeString(sortMode.value!!))
+                    val result = breedRepository.getBreeds(PAGE_SIZE, page, sortMode.value!!)
 
                     // Append breeds
                     val current = ArrayList(breeds.value)
@@ -91,10 +91,7 @@ constructor(
 
     private fun reachedEndOfList() = scrollPosition >= breeds.value!!.size - 1
 
-    private fun getSortModeString(sortMode: SortMode) = when (sortMode) {
-        SortMode.ASC -> "Asc"
-        SortMode.DESC -> "Desc"
-    }
+
 
     companion object {
         const val PAGE_SIZE = 15

@@ -1,5 +1,8 @@
 package com.brunoponte.dogapp.ui.breedSearchList.listAdapter
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import androidx.annotation.Nullable
 import androidx.recyclerview.widget.RecyclerView
 import com.brunoponte.dogapp.R
 import com.brunoponte.dogapp.databinding.BreedSearchListItemBinding
@@ -17,11 +20,14 @@ class BreedSearchListItemViewHolder(
         val notApplicableText = itemView.context.getString(R.string.not_applicable)
 
         binding.apply {
-            breed.referenceImageId?.let { referenceImageId ->
-                val imageUrl = String.format(Util.dogImageApiUrlTemplate, referenceImageId)
-
+            if (breed.referenceImageId == null) {
+                breedImage.setImageResource(R.drawable.ic_no_image)
+            } else {
                 Glide.with(itemView.context)
-                    .load(imageUrl)
+                    .load(String.format(Util.dogImageApiUrlTemplate, breed.referenceImageId))
+                    .placeholder(R.drawable.ic_loading)
+                    .error(R.drawable.ic_no_image)
+                    .centerCrop()
                     .into(breedImage)
             }
 

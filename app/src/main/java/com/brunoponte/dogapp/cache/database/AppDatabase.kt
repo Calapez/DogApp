@@ -7,7 +7,7 @@ import com.brunoponte.dogapp.cache.entities.BreedEntity
 
 @Database(
     entities = [BreedEntity::class],
-    version = 1)
+    version = 2)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun breedDao(): BreedDao

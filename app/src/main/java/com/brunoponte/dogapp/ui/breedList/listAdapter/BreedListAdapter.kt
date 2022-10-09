@@ -1,6 +1,5 @@
 package com.brunoponte.dogapp.ui.breedList.listAdapter
 
-import android.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,19 +20,19 @@ interface BreedListInteraction {
 class BreedListAdapter(
     private val interaction: BreedListInteraction,
     var listMode: ListMode
-) : ListAdapter<Breed, BreedViewHolder>(BreedListAdapter) {
+) : ListAdapter<Breed, BreedListItemViewHolder>(BreedListAdapter) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BreedViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BreedListItemViewHolder {
         val view: View = if (listMode == ListMode.LINEAR) {
             BreedListItemLinearBinding.inflate(LayoutInflater.from(parent.context), parent, false).root
         } else {
             BreedListItemGridBinding.inflate(LayoutInflater.from(parent.context), parent, false).root
         }
 
-        return BreedViewHolder(view, interaction)
+        return BreedListItemViewHolder(view, interaction)
     }
 
-    override fun onBindViewHolder(holder: BreedViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BreedListItemViewHolder, position: Int) {
         holder.bind(getItem(position), position)
         interaction.onIndexReached(position)
     }

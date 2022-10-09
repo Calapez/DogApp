@@ -11,7 +11,7 @@ import com.brunoponte.dogapp.helpers.Util
 import com.bumptech.glide.Glide
 
 
-class BreedViewHolder(
+class BreedListItemViewHolder(
     private val view: View,
     private val interaction: BreedListInteraction
 ) : RecyclerView.ViewHolder(view) {
@@ -21,13 +21,16 @@ class BreedViewHolder(
 
         val breedImageView: ImageView = view.findViewById(R.id.breedImage)
         val breedNameTextView: TextView = view.findViewById(R.id.breedNameText)
-        val breedRepoCardView: CardView = view.findViewById(R.id.repoCard)
+        val breedRepoCardView: CardView = view.findViewById(R.id.breedCard)
 
-        breed.referenceImageId?.let { referenceImageId ->
-            val imageUrl = String.format(Util.dogImageApiUrlTemplate, referenceImageId)
-
+        if (breed.referenceImageId == null) {
+            breedImageView.setImageResource(R.drawable.ic_no_image)
+        } else {
             Glide.with(itemView.context)
-                .load(imageUrl)
+                .load(String.format(Util.dogImageApiUrlTemplate, breed.referenceImageId))
+                .placeholder(R.drawable.ic_loading)
+                .error(R.drawable.ic_no_image)
+                .centerCrop()
                 .into(breedImageView)
         }
 

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/repoCard"
+    android:id="@+id/breedCard"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:contentDescription="Breed image"
-            android:scaleType="center"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@color/teal_200" />
 
