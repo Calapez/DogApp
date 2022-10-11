@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.brunoponte.dogapp.domainModels.Breed
 import com.brunoponte.dogapp.repository.IBreedRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,18 +15,19 @@ import javax.inject.Inject
 class BreedSearchListViewModel
 @Inject
 constructor(
-    private val breedRepository: IBreedRepository
+    private val breedRepository: IBreedRepository,
+    private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private var query = ""
 
-    val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
-    val breeds: MutableLiveData<List<Breed>> = MutableLiveData(listOf())
+    val isLoading = MutableLiveData(false)
+    val breeds = MutableLiveData(listOf<Breed>())
 
     fun searchBreeds(newQuery: String?) {
         query = newQuery ?: ""
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(dispatcher).launch {
             isLoading.postValue(true)
             val result = breedRepository.searchBreeds(query)
             isLoading.postValue(false)

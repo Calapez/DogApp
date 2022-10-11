@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.brunoponte.dogapp.domainModels.Breed
 import com.brunoponte.dogapp.repository.IBreedRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,16 +14,17 @@ import javax.inject.Inject
 class BreedListViewModel
 @Inject
 constructor(
-    private val breedRepository: IBreedRepository
+    private val breedRepository: IBreedRepository,
+    private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private var scrollPosition = 0
     private var page = 0
 
-    val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
-    val breeds: MutableLiveData<List<Breed>> = MutableLiveData(listOf())
-    val sortMode: MutableLiveData<SortMode> = MutableLiveData(SortMode.ASC)
-    val listMode: MutableLiveData<ListMode> = MutableLiveData(ListMode.LINEAR)
+    val isLoading = MutableLiveData(false)
+    val breeds = MutableLiveData(listOf<Breed>())
+    val sortMode = MutableLiveData(SortMode.ASC)
+    val listMode = MutableLiveData(ListMode.LINEAR)
 
     fun getFirstBreeds(force: Boolean = false) {
         // Fetches the first page of the breeds
@@ -33,7 +34,7 @@ constructor(
             return
         }
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(dispatcher).launch {
             isLoading.postValue(true)
             val result = breedRepository.getBreeds(PAGE_SIZE, 0, sortMode.value!!)
             page += 1
@@ -69,7 +70,7 @@ constructor(
     }
 
     private fun getNextPage() {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(dispatcher).launch {
             if (reachedEndOfList()) {
                 isLoading.postValue(true)
 
@@ -90,8 +91,6 @@ constructor(
     }
 
     private fun reachedEndOfList() = scrollPosition >= breeds.value!!.size - 1
-
-
 
     companion object {
         const val PAGE_SIZE = 15

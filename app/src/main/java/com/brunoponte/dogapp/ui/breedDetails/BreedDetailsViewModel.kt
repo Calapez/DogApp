@@ -17,7 +17,7 @@ constructor(
     private val breedRepository: IBreedRepository
 ) : ViewModel() {
 
-    val selectedBreed: MutableLiveData<Breed?> = MutableLiveData(null)
+    val selectedBreed = MutableLiveData<Breed?>(null)
 
     fun getBreedFromId(breedId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
