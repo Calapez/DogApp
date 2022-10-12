@@ -8,7 +8,6 @@ import com.brunoponte.dogapp.databinding.BreedListItemLinearBinding
 import com.brunoponte.dogapp.databinding.BreedSearchListItemBinding
 import com.brunoponte.dogapp.domainModels.Breed
 
-
 interface BreedSearchListInteraction {
     fun onClick(position: Int, breed: Breed)
 }

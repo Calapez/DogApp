@@ -62,11 +62,6 @@ class BreedRepository(
             requestService.searchBreeds(query)
         )
 
-    private suspend fun getBreedFromNetwork(id: Int) =
-        BreedDtoMapper.mapToDomainModel(
-            requestService.getBreed(id)
-        )
-
     private fun getSortModeString(sortMode: SortMode) = when (sortMode) {
         SortMode.ASC -> "Asc"
         SortMode.DESC -> "Desc"

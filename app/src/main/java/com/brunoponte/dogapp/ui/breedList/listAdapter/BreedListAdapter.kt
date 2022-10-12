@@ -10,7 +10,6 @@ import com.brunoponte.dogapp.databinding.BreedListItemLinearBinding
 import com.brunoponte.dogapp.domainModels.Breed
 import com.brunoponte.dogapp.ui.breedList.ListMode
 
-
 interface BreedListInteraction {
     fun onClick(position: Int, breed: Breed)
 

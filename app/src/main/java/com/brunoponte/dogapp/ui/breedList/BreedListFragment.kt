@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,8 +22,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BreedListFragment : Fragment(), BreedListInteraction {
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val viewModel: BreedListViewModel by viewModels()
+
     private lateinit var binding: FragmentBreedListBinding
-    private val viewModel: BreedListViewModel by viewModels()
 
     private lateinit var listAdapter: BreedListAdapter
 

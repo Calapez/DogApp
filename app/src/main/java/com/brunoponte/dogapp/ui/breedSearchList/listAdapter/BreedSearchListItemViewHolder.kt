@@ -1,15 +1,11 @@
 package com.brunoponte.dogapp.ui.breedSearchList.listAdapter
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import androidx.annotation.Nullable
 import androidx.recyclerview.widget.RecyclerView
 import com.brunoponte.dogapp.R
 import com.brunoponte.dogapp.databinding.BreedSearchListItemBinding
 import com.brunoponte.dogapp.domainModels.Breed
 import com.brunoponte.dogapp.helpers.Util
 import com.bumptech.glide.Glide
-
 
 class BreedSearchListItemViewHolder(
     private val binding: BreedSearchListItemBinding,

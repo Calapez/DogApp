@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -18,8 +19,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BreedDetailsFragment : Fragment() {
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val viewModel: BreedDetailsViewModel by viewModels()
+
     private lateinit var binding: FragmentBreedDetailsBinding
-    private val viewModel: BreedDetailsViewModel by viewModels()
     private val args: BreedDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(

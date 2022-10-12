@@ -19,13 +19,4 @@ interface IRequestService {
         @Query("q") query: String,
     ) : List<BreedDto>
 
-
-    @GET("breeds/{query}")
-    suspend fun getBreed(
-        @Path("query") query: Int,
-    ) : BreedDto
-
-    //https://api.thedogapi.com/v1/breeds?limit=100&page=0&order=Desc
-    //https://api.thedogapi.com/v1/breeds/search?q=pinscher
-    //https://api.thedogapi.com/v1/breeds/1
 }

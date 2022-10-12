@@ -10,7 +10,6 @@ import com.brunoponte.dogapp.domainModels.Breed
 import com.brunoponte.dogapp.helpers.Util
 import com.bumptech.glide.Glide
 
-
 class BreedListItemViewHolder(
     private val view: View,
     private val interaction: BreedListInteraction

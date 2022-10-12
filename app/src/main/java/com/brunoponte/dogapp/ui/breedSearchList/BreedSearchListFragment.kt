@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.brunoponte.dogapp.databinding.FragmentBreedSearchListBinding
 import com.brunoponte.dogapp.domainModels.Breed
-import com.brunoponte.dogapp.ui.breedList.BreedListFragmentDirections
 import com.brunoponte.dogapp.ui.breedSearchList.listAdapter.BreedSearchListAdapter
 import com.brunoponte.dogapp.ui.breedSearchList.listAdapter.BreedSearchListInteraction
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,8 +21,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BreedSearchListFragment : Fragment(), BreedSearchListInteraction {
 
-    private lateinit var binding: FragmentBreedSearchListBinding
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val viewModel: BreedSearchListViewModel by viewModels()
+
+    private lateinit var binding: FragmentBreedSearchListBinding
     private val listAdapter = BreedSearchListAdapter(this).apply {
         stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy
             .PREVENT_WHEN_EMPTY
