@@ -25,6 +25,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.brunoponte.dogapp.HiltTestActivity"
+            android:exported="false"  />
+
     </application>
 
 </manifest>
