@@ -1,5 +1,6 @@
 package com.brunoponte.dogapp.ui.breedSearchList
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.brunoponte.dogapp.domainModels.Breed
@@ -7,7 +8,6 @@ import com.brunoponte.dogapp.repository.IBreedRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,18 +21,21 @@ constructor(
 
     private var query = ""
 
-    val isLoading = MutableLiveData(false)
-    val breeds = MutableLiveData(listOf<Breed>())
+    private val _isLoading = MutableLiveData(false)
+    private val _breeds = MutableLiveData(listOf<Breed>())
+
+    val isLoading: LiveData<Boolean> = _isLoading
+    val breeds: LiveData<List<Breed>> = _breeds
 
     fun searchBreeds(newQuery: String?) {
         query = newQuery ?: ""
 
         CoroutineScope(dispatcher).launch {
-            isLoading.postValue(true)
+            _isLoading.postValue(true)
             val result = breedRepository.searchBreeds(query)
-            isLoading.postValue(false)
+            _isLoading.postValue(false)
 
-            breeds.postValue(result)
+            _breeds.postValue(result)
         }
     }
 }

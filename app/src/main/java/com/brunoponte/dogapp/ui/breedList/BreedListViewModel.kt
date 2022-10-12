@@ -1,5 +1,6 @@
 package com.brunoponte.dogapp.ui.breedList
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.brunoponte.dogapp.domainModels.Breed
@@ -21,10 +22,15 @@ constructor(
     private var scrollPosition = 0
     private var page = 0
 
-    val isLoading = MutableLiveData(false)
-    val breeds = MutableLiveData(listOf<Breed>())
-    val sortMode = MutableLiveData(SortMode.ASC)
-    val listMode = MutableLiveData(ListMode.LINEAR)
+    private val _isLoading = MutableLiveData(false)
+    private val _breeds = MutableLiveData(listOf<Breed>())
+    private val _sortMode = MutableLiveData(SortMode.ASC)
+    private val _listMode = MutableLiveData(ListMode.LINEAR)
+
+    val isLoading: LiveData<Boolean> = _isLoading
+    val breeds: LiveData<List<Breed>> = _breeds
+    val sortMode: LiveData<SortMode> = _sortMode
+    val listMode: LiveData<ListMode> = _listMode
 
     fun getFirstBreeds(force: Boolean = false) {
         // Fetches the first page of the breeds
@@ -35,12 +41,12 @@ constructor(
         }
 
         CoroutineScope(dispatcher).launch {
-            isLoading.postValue(true)
+            _isLoading.postValue(true)
             val result = breedRepository.getBreeds(PAGE_SIZE, 0, sortMode.value!!)
             page += 1
-            isLoading.postValue(false)
+            _isLoading.postValue(false)
 
-            breeds.postValue(result)
+            _breeds.postValue(result)
         }
     }
 
@@ -54,7 +60,7 @@ constructor(
     }
 
     fun onSortClicked() {
-        sortMode.value = when (sortMode.value!!) {
+        _sortMode.value = when (sortMode.value!!) {
             SortMode.ASC -> SortMode.DESC
             SortMode.DESC -> SortMode.ASC
         }
@@ -63,7 +69,7 @@ constructor(
     }
 
     fun onListModeClicked() {
-        listMode.value = when (listMode.value!!) {
+        _listMode.value = when (listMode.value!!) {
             ListMode.LINEAR -> ListMode.GRID
             ListMode.GRID -> ListMode.LINEAR
         }
@@ -72,7 +78,7 @@ constructor(
     private fun getNextPage() {
         CoroutineScope(dispatcher).launch {
             if (reachedEndOfList()) {
-                isLoading.postValue(true)
+                _isLoading.postValue(true)
 
                 // Prevents this to be called on first page load
                 if (page > 0) {
@@ -81,11 +87,11 @@ constructor(
                     // Append breeds
                     val current = ArrayList(breeds.value)
                     current.addAll(result)
-                    breeds.postValue(current)
+                    _breeds.postValue(current)
 
                     page += 1
                 }
-                isLoading.postValue(false)
+                _isLoading.postValue(false)
             }
         }
     }

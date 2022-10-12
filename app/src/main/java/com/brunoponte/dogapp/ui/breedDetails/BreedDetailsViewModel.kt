@@ -1,5 +1,6 @@
 package com.brunoponte.dogapp.ui.breedDetails
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.brunoponte.dogapp.domainModels.Breed
@@ -17,12 +18,14 @@ constructor(
     private val breedRepository: IBreedRepository
 ) : ViewModel() {
 
-    val selectedBreed = MutableLiveData<Breed?>(null)
+    private val _selectedBreed = MutableLiveData<Breed?>(null)
+
+    val selectedBreed: LiveData<Breed?> = _selectedBreed
 
     fun getBreedFromId(breedId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             val breed = breedRepository.getBreed(breedId)
-            selectedBreed.postValue(breed)
+            _selectedBreed.postValue(breed)
         }
     }
 
