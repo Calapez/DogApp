@@ -14,8 +14,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.brunoponte.dogapp.R
 import com.brunoponte.dogapp.helpers.launchFragmentInHiltContainer
 import com.brunoponte.dogapp.helpers.withDrawable
-import com.brunoponte.dogapp.ui.breedList.BreedListFragment
-import com.brunoponte.dogapp.ui.breedList.listAdapter.BreedListItemViewHolder
+import com.brunoponte.dogapp.presentation.breedList.BreedListFragment
+import com.brunoponte.dogapp.presentation.breedList.listAdapter.BreedListItemViewHolder
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Assert.assertEquals

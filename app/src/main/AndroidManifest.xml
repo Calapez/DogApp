@@ -15,7 +15,7 @@
         android:theme="@style/Theme.DogApp" >
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

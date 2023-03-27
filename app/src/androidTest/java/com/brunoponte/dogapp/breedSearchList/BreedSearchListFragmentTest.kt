@@ -15,8 +15,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.brunoponte.dogapp.R
 import com.brunoponte.dogapp.helpers.RecyclerViewItemCountAssertion.Companion.withItemCount
 import com.brunoponte.dogapp.helpers.launchFragmentInHiltContainer
-import com.brunoponte.dogapp.ui.breedSearchList.BreedSearchListFragment
-import com.brunoponte.dogapp.ui.breedSearchList.listAdapter.BreedSearchListItemViewHolder
+import com.brunoponte.dogapp.presentation.breedSearchList.BreedSearchListFragment
+import com.brunoponte.dogapp.presentation.breedSearchList.listAdapter.BreedSearchListItemViewHolder
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Assert

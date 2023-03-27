@@ -7,7 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.brunoponte.dogapp.helpers.launchFragmentInHiltContainer
-import com.brunoponte.dogapp.ui.breedDetails.BreedDetailsFragment
+import com.brunoponte.dogapp.presentation.breedDetails.BreedDetailsFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before

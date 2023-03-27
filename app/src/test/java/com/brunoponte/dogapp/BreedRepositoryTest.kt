@@ -1,15 +1,14 @@
 package com.brunoponte.dogapp
 
-import android.accounts.NetworkErrorException
 import com.brunoponte.dogapp.cache.daos.BreedDao
-import com.brunoponte.dogapp.cache.entities.BreedEntity
-import com.brunoponte.dogapp.cache.entities.BreedEntityMapper
-import com.brunoponte.dogapp.domainModels.Breed
+import com.brunoponte.dogapp.cache.models.BreedEntity
+import com.brunoponte.dogapp.cache.models.BreedEntityMapper
+import com.brunoponte.dogapp.domain.models.Breed
 import com.brunoponte.dogapp.network.IRequestService
-import com.brunoponte.dogapp.network.dtos.BreedDto
-import com.brunoponte.dogapp.network.dtos.BreedDtoMapper
-import com.brunoponte.dogapp.repository.BreedRepository
-import com.brunoponte.dogapp.ui.breedList.SortMode
+import com.brunoponte.dogapp.network.models.BreedDto
+import com.brunoponte.dogapp.network.models.BreedDtoMapper
+import com.brunoponte.dogapp.data.BreedRepository
+import com.brunoponte.dogapp.presentation.breedList.SortMode
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.Before

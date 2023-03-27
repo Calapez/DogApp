@@ -1,9 +1,9 @@
 package com.brunoponte.dogapp
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.brunoponte.dogapp.domainModels.Breed
-import com.brunoponte.dogapp.repository.IBreedRepository
-import com.brunoponte.dogapp.ui.breedSearchList.BreedSearchListViewModel
+import com.brunoponte.dogapp.domain.models.Breed
+import com.brunoponte.dogapp.domain.repository.IBreedRepository
+import com.brunoponte.dogapp.presentation.breedSearchList.BreedSearchListViewModel
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/breedListFragment"
-        android:name="com.brunoponte.dogapp.ui.breedList.BreedListFragment"
+        android:name="com.brunoponte.dogapp.presentation.breedList.BreedListFragment"
         android:label="BreedListFragment"
         tools:layout="@layout/fragment_breed_list" >
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/breedSearchListFragment"
-        android:name="com.brunoponte.dogapp.ui.breedSearchList.BreedSearchListFragment"
+        android:name="com.brunoponte.dogapp.presentation.breedSearchList.BreedSearchListFragment"
         android:label="BreedSearchListFragment"
         tools:layout="@layout/fragment_breed_search_list" >
         <action
@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/breedDetailsFragment"
-        android:name="com.brunoponte.dogapp.ui.breedDetails.BreedDetailsFragment"
+        android:name="com.brunoponte.dogapp.presentation.breedDetails.BreedDetailsFragment"
         android:label="BreedDetailsFragment"
         tools:layout="@layout/fragment_breed_details" >
 

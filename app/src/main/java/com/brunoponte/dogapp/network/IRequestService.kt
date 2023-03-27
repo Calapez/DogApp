@@ -1,8 +1,7 @@
 package com.brunoponte.dogapp.network
 
-import com.brunoponte.dogapp.network.dtos.BreedDto
+import com.brunoponte.dogapp.network.models.BreedDto
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface IRequestService {
