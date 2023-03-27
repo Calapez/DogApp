@@ -5,6 +5,7 @@ import com.brunoponte.dogapp.R
 import com.brunoponte.dogapp.databinding.BreedSearchListItemBinding
 import com.brunoponte.dogapp.domainModels.Breed
 import com.brunoponte.dogapp.helpers.Util
+import com.brunoponte.dogapp.ui.BreedItemViewState
 import com.bumptech.glide.Glide
 
 class BreedSearchListItemViewHolder(
@@ -12,7 +13,7 @@ class BreedSearchListItemViewHolder(
     private val interaction: BreedSearchListInteraction
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(breed: Breed, position: Int) {
+    fun bind(breed: BreedItemViewState, position: Int) {
         val notApplicableText = itemView.context.getString(R.string.not_applicable)
 
         binding.apply {
@@ -34,7 +35,7 @@ class BreedSearchListItemViewHolder(
             breedOriginText.text = breed.origin ?: notApplicableText
 
             root.setOnClickListener {
-                interaction.onClick(position, breed)
+                interaction.onClick(position, breed.id)
             }
         }
     }

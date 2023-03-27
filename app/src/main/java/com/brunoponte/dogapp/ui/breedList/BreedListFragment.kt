@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,6 +18,7 @@ import com.brunoponte.dogapp.databinding.FragmentBreedListBinding
 import com.brunoponte.dogapp.domainModels.Breed
 import com.brunoponte.dogapp.ui.breedList.listAdapter.BreedListAdapter
 import com.brunoponte.dogapp.ui.breedList.listAdapter.BreedListInteraction
+import com.brunoponte.dogapp.ui.breedSearchList.BreedSearchListViewState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -82,8 +84,27 @@ class BreedListFragment : Fragment(), BreedListInteraction {
     }
 
     private fun setupViewModelObservers() {
-        viewModel.breeds.observe(viewLifecycleOwner) { breeds ->
-            listAdapter.submitList(breeds)
+        viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
+            when(viewState) {
+                is BreedListViewState.Content -> {
+                    binding.loadingProgressIndicator.isVisible = false
+                    binding.errorView.isVisible = false
+                    binding.breedListRecyclerView.isVisible = true
+                    listAdapter.submitList(viewState.breeds)
+                }
+
+                BreedListViewState.Loading -> {
+                    binding.errorView.isVisible = false
+                    binding.breedListRecyclerView.isVisible = true
+                    binding.loadingProgressIndicator.isVisible = true
+                }
+
+                BreedListViewState.Error -> {
+                    binding.breedListRecyclerView.isVisible = false
+                    binding.loadingProgressIndicator.isVisible = false
+                    binding.errorView.isVisible = true
+                }
+            }
         }
 
         viewModel.sortMode.observe(viewLifecycleOwner) { sortMode ->
@@ -115,12 +136,6 @@ class BreedListFragment : Fragment(), BreedListInteraction {
             }
 
             binding.breedListRecyclerView.adapter = listAdapter
-        }
-
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.loadingProgressIndicator.visibility =
-                if (isLoading) View.VISIBLE
-                else View.GONE
         }
     }
 }

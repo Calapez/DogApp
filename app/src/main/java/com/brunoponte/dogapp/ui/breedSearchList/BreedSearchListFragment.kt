@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.utils.ViewState
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -51,25 +53,40 @@ class BreedSearchListFragment : Fragment(), BreedSearchListInteraction {
             recyclerView.adapter = listAdapter
         }
 
-        setupViewModelObservers()
+        viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
+            updateUi(viewState)
+        }
 
         binding.searchView.doOnTextChanged { text, _, _, _ ->
             viewModel.searchBreeds(text.toString())
         }
     }
 
-    override fun onClick(position: Int, breed: Breed) {
-        val action = BreedSearchListFragmentDirections.actionBreedSearchListFragmentToBreedDetailsFragment(breed.id)
+    override fun onClick(position: Int, breedId: Int) {
+        val action = BreedSearchListFragmentDirections.actionBreedSearchListFragmentToBreedDetailsFragment(breedId)
         findNavController().navigate(action)
     }
 
-    private fun setupViewModelObservers() {
-        viewModel.breeds.observe(viewLifecycleOwner) { breeds ->
-            listAdapter.submitList(breeds?.map { it.copy() })
-        }
+    private fun updateUi(viewState: BreedSearchListViewState) {
+        when(viewState) {
+            is BreedSearchListViewState.Content -> {
+                binding.progress.isVisible = false
+                binding.errorView.isVisible = false
+                binding.breedsRecyclerView.isVisible = true
+                listAdapter.submitList(viewState.breeds.map { it.copy() })
+            }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progress.visibility = if (isLoading) View.VISIBLE else View.GONE
+            BreedSearchListViewState.Loading -> {
+                binding.errorView.isVisible = false
+                binding.breedsRecyclerView.isVisible = true
+                binding.progress.isVisible = true
+            }
+
+            BreedSearchListViewState.Error -> {
+                binding.breedsRecyclerView.isVisible = false
+                binding.progress.isVisible = false
+                binding.errorView.isVisible = true
+            }
         }
     }
 }

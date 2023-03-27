@@ -9,7 +9,6 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.brunoponte.dogapp.R
@@ -30,7 +29,7 @@ import org.junit.runner.RunWith
 @HiltAndroidTest
 class BreedListFragmentTest {
 
-    lateinit var fragment: BreedListFragment
+    private lateinit var fragment: BreedListFragment
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)

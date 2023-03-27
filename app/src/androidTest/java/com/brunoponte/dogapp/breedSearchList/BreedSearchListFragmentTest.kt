@@ -30,7 +30,7 @@ import org.junit.runner.RunWith
 @HiltAndroidTest
 class BreedSearchListFragmentTest {
 
-    lateinit var fragment: BreedSearchListFragment
+    private lateinit var fragment: BreedSearchListFragment
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)

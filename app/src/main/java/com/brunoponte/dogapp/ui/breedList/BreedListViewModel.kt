@@ -3,6 +3,7 @@ package com.brunoponte.dogapp.ui.breedList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.brunoponte.dogapp.domainModels.Breed
 import com.brunoponte.dogapp.repository.IBreedRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,38 +23,42 @@ constructor(
     private var scrollPosition = 0
     private var page = 0
 
-    private val _isLoading = MutableLiveData(false)
-    private val _breeds = MutableLiveData(listOf<Breed>())
     private val _sortMode = MutableLiveData(SortMode.ASC)
     private val _listMode = MutableLiveData(ListMode.LINEAR)
 
-    val isLoading: LiveData<Boolean> = _isLoading
-    val breeds: LiveData<List<Breed>> = _breeds
     val sortMode: LiveData<SortMode> = _sortMode
     val listMode: LiveData<ListMode> = _listMode
 
+    private val _viewState = MutableLiveData<BreedListViewState>()
+    val viewState: LiveData<BreedListViewState>
+        get() = _viewState
+
+    private val _breeds: List<Breed>
+        get() =
+            if (_viewState.value is BreedListViewState.Content)
+                (_viewState.value as BreedListViewState.Content).breeds
+            else
+                listOf()
+
     fun getFirstBreeds(force: Boolean = false) {
         // Fetches the first page of the breeds
-
-        if (breeds.value?.isNotEmpty() == true && !force) {
-            // Already got breeds
+        if (_breeds.isNotEmpty() && !force) {
+            // Already got breeds, do nothing
             return
         }
 
-        CoroutineScope(dispatcher).launch {
-            _isLoading.postValue(true)
+        viewModelScope.launch(dispatcher) {
+            _viewState.postValue(BreedListViewState.Loading)
             val result = breedRepository.getBreeds(PAGE_SIZE, 0, sortMode.value!!)
             page += 1
-            _isLoading.postValue(false)
-
-            _breeds.postValue(result)
+            _viewState.postValue(BreedListViewState.Content(result))
         }
     }
 
     fun onChangeBreedScrollPosition(position: Int) {
         scrollPosition = position
 
-        if (reachedEndOfList() && !isLoading.value!!) {
+        if (reachedEndOfList() && _viewState.value !is BreedListViewState.Loading) {
             // Reached end of current page and isn't loading breeds. Must load next page.
             getNextPage()
         }
@@ -78,25 +83,24 @@ constructor(
     private fun getNextPage() {
         CoroutineScope(dispatcher).launch {
             if (reachedEndOfList()) {
-                _isLoading.postValue(true)
+                _viewState.postValue(BreedListViewState.Loading)
 
                 // Prevents this to be called on first page load
                 if (page > 0) {
                     val result = breedRepository.getBreeds(PAGE_SIZE, page, sortMode.value!!)
 
                     // Append breeds
-                    val current = ArrayList(breeds.value)
+                    val current = ArrayList(_breeds)
                     current.addAll(result)
-                    _breeds.postValue(current)
+                    _viewState.postValue(BreedListViewState.Content(current))
 
                     page += 1
                 }
-                _isLoading.postValue(false)
             }
         }
     }
 
-    private fun reachedEndOfList() = scrollPosition >= breeds.value!!.size - 1
+    private fun reachedEndOfList() = scrollPosition >= _breeds.size - 1
 
     companion object {
         const val PAGE_SIZE = 15

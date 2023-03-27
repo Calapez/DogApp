@@ -3,4 +3,5 @@
     <string name="sort">Sort</string>
     <string name="search_dogs_hint">Search breeds</string>
     <string name="not_applicable">N/A</string>
+    <string name="error_occurred">An error occurred</string>
 </resources>

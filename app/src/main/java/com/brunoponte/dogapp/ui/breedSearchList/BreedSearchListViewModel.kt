@@ -1,10 +1,13 @@
 package com.brunoponte.dogapp.ui.breedSearchList
 
+import androidx.constraintlayout.motion.utils.ViewState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.brunoponte.dogapp.domainModels.Breed
 import com.brunoponte.dogapp.repository.IBreedRepository
+import com.brunoponte.dogapp.ui.BreedItemViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -16,26 +19,31 @@ class BreedSearchListViewModel
 @Inject
 constructor(
     private val breedRepository: IBreedRepository,
+    private val breedSearchListUseCase: BreedSearchListUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private var query = ""
 
-    private val _isLoading = MutableLiveData(false)
-    private val _breeds = MutableLiveData(listOf<Breed>())
-
-    val isLoading: LiveData<Boolean> = _isLoading
-    val breeds: LiveData<List<Breed>> = _breeds
+    private val _viewState = MutableLiveData<BreedSearchListViewState>()
+    val viewState: LiveData<BreedSearchListViewState>
+        get() = _viewState
 
     fun searchBreeds(newQuery: String?) {
         query = newQuery ?: ""
 
-        CoroutineScope(dispatcher).launch {
-            _isLoading.postValue(true)
-            val result = breedRepository.searchBreeds(query)
-            _isLoading.postValue(false)
-
-            _breeds.postValue(result)
+        viewModelScope.launch(dispatcher) {
+            _viewState.postValue(BreedSearchListViewState.Loading)
+            val result = breedSearchListUseCase.execute(query)
+            _viewState.postValue(BreedSearchListViewState.Content(result.map {
+                BreedItemViewState(
+                    it.id,
+                    it.name,
+                    it.breedGroup,
+                    it.referenceImageId,
+                    it.origin,
+                )
+            }))
         }
     }
 }
