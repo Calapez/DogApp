@@ -34,8 +34,11 @@ interface BreedDao {
     @Query("SELECT * FROM breeds WHERE id = :breedId")
     suspend fun getBreed(breedId: Int): BreedEntity?
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBreeds(repos: List<BreedEntity>): LongArray
+
+    @Query("SELECT (SELECT COUNT(*) FROM breeds) == 0")
+    suspend fun isEmpty(): Boolean
 
     @Query("DELETE FROM breeds")
     suspend fun nukeTable()

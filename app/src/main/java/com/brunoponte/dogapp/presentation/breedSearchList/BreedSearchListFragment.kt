@@ -73,17 +73,15 @@ class BreedSearchListFragment : Fragment(), BreedSearchListInteraction {
                 binding.breedsRecyclerView.isVisible = true
                 listAdapter.submitList(viewState.breeds.map { it.copy() })
             }
-
+            is BreedSearchListViewState.Error -> {
+                binding.breedsRecyclerView.isVisible = false
+                binding.progress.isVisible = false
+                binding.errorView.isVisible = true
+            }
             BreedSearchListViewState.Loading -> {
                 binding.errorView.isVisible = false
                 binding.breedsRecyclerView.isVisible = true
                 binding.progress.isVisible = true
-            }
-
-            BreedSearchListViewState.Error -> {
-                binding.breedsRecyclerView.isVisible = false
-                binding.progress.isVisible = false
-                binding.errorView.isVisible = true
             }
         }
     }

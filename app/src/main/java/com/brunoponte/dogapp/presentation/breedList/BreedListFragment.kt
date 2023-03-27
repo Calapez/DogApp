@@ -90,17 +90,15 @@ class BreedListFragment : Fragment(), BreedListInteraction {
                     binding.breedListRecyclerView.isVisible = true
                     listAdapter.submitList(viewState.breeds)
                 }
-
+                is BreedListViewState.Error -> {
+                    binding.breedListRecyclerView.isVisible = false
+                    binding.loadingProgressIndicator.isVisible = false
+                    binding.errorView.isVisible = true
+                }
                 BreedListViewState.Loading -> {
                     binding.errorView.isVisible = false
                     binding.breedListRecyclerView.isVisible = true
                     binding.loadingProgressIndicator.isVisible = true
-                }
-
-                BreedListViewState.Error -> {
-                    binding.breedListRecyclerView.isVisible = false
-                    binding.loadingProgressIndicator.isVisible = false
-                    binding.errorView.isVisible = true
                 }
             }
         }

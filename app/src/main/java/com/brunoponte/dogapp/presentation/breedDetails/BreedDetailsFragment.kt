@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.utils.ViewState
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.brunoponte.dogapp.R
 import com.brunoponte.dogapp.databinding.FragmentBreedDetailsBinding
+import com.brunoponte.dogapp.domain.models.Breed
 import com.brunoponte.dogapp.network.Util
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,29 +47,45 @@ class BreedDetailsFragment : Fragment() {
     }
 
     private fun setupViewModelObservers() {
-        viewModel.selectedBreed.observe(viewLifecycleOwner) { breed ->
-            setupView(breed)
+        viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
+            setupView(viewState)
         }
     }
 
-    private fun setupView(breed: BreedDetailsViewState?) {
-        breed?.let {
-            val notApplicableText = getString(R.string.not_applicable)
+    private fun setupView(viewState: BreedDetailsViewState) {
+        when(viewState) {
+            is BreedDetailsViewState.Content -> {
+                binding.loadingProgressIndicator.isVisible = false
+                binding.breedDetailsView.isVisible = true
 
-            Glide.with(this)
-                .load(String.format(Util.dogImageApiUrlTemplate, breed.referenceImageId))
-                .placeholder(R.drawable.ic_loading)
-                .error(R.drawable.ic_no_image)
-                .into(binding.breedImage)
+                viewState.breed?.let {
+                    val notApplicableText = getString(R.string.not_applicable)
 
-            binding.breedNameText.text = breed.name ?: notApplicableText
+                    Glide.with(this)
+                        .load(String.format(Util.dogImageApiUrlTemplate, it.referenceImageId))
+                        .placeholder(R.drawable.ic_loading)
+                        .error(R.drawable.ic_no_image)
+                        .into(binding.breedImage)
 
-            binding.breedGroupText.text = breed.breedGroup ?: notApplicableText
+                    binding.breedNameText.text = it.name ?: notApplicableText
 
-            binding.breedOriginText.text = breed.origin ?: notApplicableText
+                    binding.breedGroupText.text = it.breedGroup ?: notApplicableText
 
-            binding.breedTemperamentText.text = breed.temperament ?: notApplicableText
+                    binding.breedOriginText.text = it.origin ?: notApplicableText
+
+                    binding.breedTemperamentText.text = it.temperament ?: notApplicableText
+                }
+            }
+            is BreedDetailsViewState.Error -> {
+                binding.loadingProgressIndicator.isVisible = false
+                binding.breedDetailsView.isVisible = false
+            }
+            BreedDetailsViewState.Loading -> {
+                binding.breedDetailsView.isVisible = false
+                binding.loadingProgressIndicator.isVisible = true
+            }
         }
+
 
     }
 }

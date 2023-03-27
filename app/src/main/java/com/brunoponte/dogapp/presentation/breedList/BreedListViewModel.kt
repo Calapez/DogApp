@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.brunoponte.dogapp.domain.Response
 import com.brunoponte.dogapp.domain.useCases.BreedListPageUseCase
 import com.brunoponte.dogapp.presentation.BreedItemViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,17 +46,21 @@ constructor(
 
         viewModelScope.launch(dispatcher) {
             _viewState.postValue(BreedListViewState.Loading)
-            val result = breedListPageUseCase.execute(PAGE_SIZE, 0, sortMode.value!!)
+            val response = breedListPageUseCase.execute(PAGE_SIZE, 0, sortMode.value!!)
             page += 1
-            _viewState.postValue(BreedListViewState.Content(result.map {
-                BreedItemViewState(
-                    it.id,
-                    it.name,
-                    it.breedGroup,
-                    it.referenceImageId,
-                    it.origin,
-                )
-            }))
+            when (response) {
+                is Response.Success -> _viewState.postValue(BreedListViewState
+                    .Content(response.data.map {
+                        BreedItemViewState(
+                            it.id,
+                            it.name,
+                            it.breedGroup,
+                            it.referenceImageId,
+                            it.origin
+                        )}))
+                is Response.Error -> _viewState.postValue(BreedListViewState
+                    .Error(response.exception.message ?: ""))
+            }
         }
     }
 
@@ -93,19 +98,34 @@ constructor(
 
                 // Prevents this to be called on first page load
                 if (page > 0) {
-                    val result = breedListPageUseCase.execute(PAGE_SIZE, page, sortMode.value!!)
+                    val response = breedListPageUseCase.execute(PAGE_SIZE, page, sortMode.value!!)
 
-                    // Append breeds
-                    currentBreeds.addAll(result.map {
-                        BreedItemViewState(
-                            it.id,
-                            it.name,
-                            it.breedGroup,
-                            it.referenceImageId,
-                            it.origin,
-                        )
-                    })
-                    _viewState.postValue(BreedListViewState.Content(currentBreeds))
+                    when (response) {
+                        is Response.Success -> {
+                            // Append breeds
+                            currentBreeds.addAll(response.data.map {
+                                BreedItemViewState(
+                                    it.id,
+                                    it.name,
+                                    it.breedGroup,
+                                    it.referenceImageId,
+                                    it.origin,
+                                )
+                            })
+
+                            _viewState.postValue(BreedListViewState.Content(currentBreeds.map {
+                                BreedItemViewState(
+                                    it.id,
+                                    it.name,
+                                    it.breedGroup,
+                                    it.referenceImageId,
+                                    it.origin
+                                )}))
+                        }
+                        is Response.Error -> {
+                            _viewState.postValue(BreedListViewState.Error(response.exception.message ?: ""))
+                        }
+                    }
 
                     page += 1
                 }
