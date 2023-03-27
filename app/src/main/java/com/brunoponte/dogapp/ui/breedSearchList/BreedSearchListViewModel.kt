@@ -18,7 +18,6 @@ import javax.inject.Inject
 class BreedSearchListViewModel
 @Inject
 constructor(
-    private val breedRepository: IBreedRepository,
     private val breedSearchListUseCase: BreedSearchListUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {

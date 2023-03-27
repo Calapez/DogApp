@@ -13,6 +13,7 @@ import com.brunoponte.dogapp.R
 import com.brunoponte.dogapp.databinding.FragmentBreedDetailsBinding
 import com.brunoponte.dogapp.domainModels.Breed
 import com.brunoponte.dogapp.helpers.Util
+import com.brunoponte.dogapp.ui.BreedDetailsViewState
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,7 +51,7 @@ class BreedDetailsFragment : Fragment() {
         }
     }
 
-    private fun setupView(breed: Breed?) {
+    private fun setupView(breed: BreedDetailsViewState?) {
         breed?.let {
             val notApplicableText = getString(R.string.not_applicable)
 

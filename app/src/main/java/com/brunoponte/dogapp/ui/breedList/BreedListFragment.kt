@@ -73,8 +73,8 @@ class BreedListFragment : Fragment(), BreedListInteraction {
         setupViewModelObservers()
     }
 
-    override fun onClick(position: Int, breed: Breed) {
-        val action = BreedListFragmentDirections.actionBreedListFragmentToBreedDetailsFragment(breed.id)
+    override fun onClick(position: Int, breedId: Int) {
+        val action = BreedListFragmentDirections.actionBreedListFragmentToBreedDetailsFragment(breedId)
         findNavController().navigate(action)
     }
 

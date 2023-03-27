@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.brunoponte.dogapp.domainModels.Breed
-import com.brunoponte.dogapp.repository.IBreedRepository
+import com.brunoponte.dogapp.ui.BreedItemViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +15,7 @@ import javax.inject.Inject
 class BreedListViewModel
 @Inject
 constructor(
-    private val breedRepository: IBreedRepository,
+    private val breedListPageUseCase: BreedListPageUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -33,25 +32,29 @@ constructor(
     val viewState: LiveData<BreedListViewState>
         get() = _viewState
 
-    private val _breeds: List<Breed>
-        get() =
-            if (_viewState.value is BreedListViewState.Content)
-                (_viewState.value as BreedListViewState.Content).breeds
-            else
-                listOf()
+    private val _viewStateBreeds: List<BreedItemViewState>
+        get() = (_viewState.value as? BreedListViewState.Content)?.breeds ?: listOf()
 
     fun getFirstBreeds(force: Boolean = false) {
         // Fetches the first page of the breeds
-        if (_breeds.isNotEmpty() && !force) {
+        if (_viewStateBreeds.isNotEmpty() && !force) {
             // Already got breeds, do nothing
             return
         }
 
         viewModelScope.launch(dispatcher) {
             _viewState.postValue(BreedListViewState.Loading)
-            val result = breedRepository.getBreeds(PAGE_SIZE, 0, sortMode.value!!)
+            val result = breedListPageUseCase.execute(PAGE_SIZE, 0, sortMode.value!!)
             page += 1
-            _viewState.postValue(BreedListViewState.Content(result))
+            _viewState.postValue(BreedListViewState.Content(result.map {
+                BreedItemViewState(
+                    it.id,
+                    it.name,
+                    it.breedGroup,
+                    it.referenceImageId,
+                    it.origin,
+                )
+            }))
         }
     }
 
@@ -83,16 +86,25 @@ constructor(
     private fun getNextPage() {
         CoroutineScope(dispatcher).launch {
             if (reachedEndOfList()) {
+                val currentBreeds = ArrayList(_viewStateBreeds)
+
                 _viewState.postValue(BreedListViewState.Loading)
 
                 // Prevents this to be called on first page load
                 if (page > 0) {
-                    val result = breedRepository.getBreeds(PAGE_SIZE, page, sortMode.value!!)
+                    val result = breedListPageUseCase.execute(PAGE_SIZE, page, sortMode.value!!)
 
                     // Append breeds
-                    val current = ArrayList(_breeds)
-                    current.addAll(result)
-                    _viewState.postValue(BreedListViewState.Content(current))
+                    currentBreeds.addAll(result.map {
+                        BreedItemViewState(
+                            it.id,
+                            it.name,
+                            it.breedGroup,
+                            it.referenceImageId,
+                            it.origin,
+                        )
+                    })
+                    _viewState.postValue(BreedListViewState.Content(currentBreeds))
 
                     page += 1
                 }
@@ -100,7 +112,7 @@ constructor(
         }
     }
 
-    private fun reachedEndOfList() = scrollPosition >= _breeds.size - 1
+    private fun reachedEndOfList() = scrollPosition >= _viewStateBreeds.size - 1
 
     companion object {
         const val PAGE_SIZE = 15

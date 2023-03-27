@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.brunoponte.dogapp.R
 import com.brunoponte.dogapp.domainModels.Breed
 import com.brunoponte.dogapp.helpers.Util
+import com.brunoponte.dogapp.ui.BreedItemViewState
 import com.bumptech.glide.Glide
 
 class BreedListItemViewHolder(
@@ -15,7 +16,7 @@ class BreedListItemViewHolder(
     private val interaction: BreedListInteraction
 ) : RecyclerView.ViewHolder(view) {
 
-    fun bind(breed: Breed, position: Int) {
+    fun bind(breed: BreedItemViewState, position: Int) {
         val notApplicableText = itemView.context.getString(R.string.not_applicable)
 
         val breedImageView: ImageView = view.findViewById(R.id.breedImage)
@@ -36,7 +37,7 @@ class BreedListItemViewHolder(
         breedNameTextView.text = breed.name ?: notApplicableText
 
         breedRepoCardView.setOnClickListener {
-            interaction.onClick(position, breed)
+            interaction.onClick(position, breed.id)
         }
     }
 }
