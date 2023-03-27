@@ -19,7 +19,9 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideBreedRepository(requestService: IRequestService, breedDao: BreedDao) : IBreedRepository {
-        return BreedRepository(requestService, breedDao)
+    fun provideBreedRepository(
+        breedRepository: BreedRepository,
+    ) : IBreedRepository {
+        return breedRepository
     }
 }

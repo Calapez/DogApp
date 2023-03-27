@@ -3,24 +3,27 @@ package com.brunoponte.dogapp.data
 import android.util.Log
 import com.brunoponte.dogapp.cache.daos.BreedDao
 import com.brunoponte.dogapp.cache.models.BreedEntityMapper
+import com.brunoponte.dogapp.data.sources.BreedDataSourceFactory
 import com.brunoponte.dogapp.domain.Response
 import com.brunoponte.dogapp.domain.repository.IBreedRepository
 import com.brunoponte.dogapp.domain.models.Breed
 import com.brunoponte.dogapp.network.IRequestService
 import com.brunoponte.dogapp.network.models.BreedDtoMapper
 import com.brunoponte.dogapp.presentation.breedList.SortMode
+import javax.inject.Inject
 
-class BreedRepository(
-    private val requestService: IRequestService,
-    private val breedDao: BreedDao
+class BreedRepository
+@Inject
+constructor(
+    private val dataSourceFactory: BreedDataSourceFactory
 ) : IBreedRepository {
 
     override suspend fun getBreeds(pageSize: Int, page: Int, order: SortMode): Response<List<Breed>> {
         val networkResponse =
             try {
-                val breeds = getBreedsFromNetwork(pageSize, page, getSortModeString(order))
+                val breeds = dataSourceFactory.getRemoteDataSource().getBreeds(pageSize, page, order)
                 // Insert into cache
-                breedDao.insertBreeds(BreedEntityMapper.toEntityList(breeds))
+                dataSourceFactory.getCacheDataSource().saveBreeds(breeds)
                 Response.Success(breeds)
             } catch (exception: Exception) {
                 // There was an issue
@@ -29,24 +32,21 @@ class BreedRepository(
                 Response.Error(exception)
             }
 
-        if (networkResponse is Response.Success || breedDao.isEmpty()) {
+        if (networkResponse is Response.Success
+            || !dataSourceFactory.getCacheDataSource().isCached()) {
             return networkResponse
         }
 
         // If any error occurred, return the breeds stored in the cache
-        val cachedBreeds = when(order) {
-            SortMode.ASC -> breedDao.getBreedsAsc(pageSize = pageSize, page = page)
-            SortMode.DESC -> breedDao.getBreedsDesc(pageSize = pageSize, page = page)
-        }
-        return Response.Success(BreedEntityMapper.toDomainModelList(cachedBreeds))
+        return Response.Success(dataSourceFactory.getCacheDataSource().getBreeds(pageSize, page, order))
     }
 
     override suspend fun searchBreeds(query: String): Response<List<Breed>> {
         val networkResponse =
             try {
-                val breeds = searchBreedsFromNetwork(query)
+                val breeds = dataSourceFactory.getRemoteDataSource().searchBreeds(query)
                 // Insert into cache
-                breedDao.insertBreeds(BreedEntityMapper.toEntityList(breeds))
+                dataSourceFactory.getCacheDataSource().saveBreeds(breeds)
                 Response.Success(breeds)
             } catch (exception: Exception) {
                 // There was an issue
@@ -55,38 +55,22 @@ class BreedRepository(
                 Response.Error(exception)
             }
 
-        if (networkResponse is Response.Success || breedDao.isEmpty()) {
+        if (networkResponse is Response.Success
+            || !dataSourceFactory.getCacheDataSource().isCached()) {
             return networkResponse
         }
 
         // If any error occurred, return the breeds stored in the cache
-        val cachedBreeds = breedDao.searchBreeds(query = query)
-        return Response.Success(BreedEntityMapper.toDomainModelList(cachedBreeds))
+        return Response.Success(dataSourceFactory.getCacheDataSource().searchBreeds(query))
     }
 
     override suspend fun getBreed(id: Int): Response<Breed?> =
         try {
-            val breedEntity = breedDao.getBreed(id)
-            Response.Success(breedEntity?.let { BreedEntityMapper.mapToDomainModel(it) })
+            Response.Success(dataSourceFactory.getCacheDataSource().getBreed(id))
         } catch (exception: Exception) {
             // There was an issue
             exception.printStackTrace()
             Log.e("CacheLayer", exception.message, exception)
             Response.Error(exception)
         }
-
-    private suspend fun getBreedsFromNetwork(pageSize: Int, page: Int, order: String) =
-        BreedDtoMapper.toDomainModelList(
-            requestService.getBreeds(pageSize, page, order)
-        )
-
-    private suspend fun searchBreedsFromNetwork(query: String) =
-        BreedDtoMapper.toDomainModelList(
-            requestService.searchBreeds(query)
-        )
-
-    private fun getSortModeString(sortMode: SortMode) = when (sortMode) {
-        SortMode.ASC -> "Asc"
-        SortMode.DESC -> "Desc"
-    }
 }

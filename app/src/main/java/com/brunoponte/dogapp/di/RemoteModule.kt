@@ -1,7 +1,9 @@
 package com.brunoponte.dogapp.di
 
-import com.brunoponte.dogapp.network.Util
+import com.brunoponte.dogapp.data.BreedRemote
+import com.brunoponte.dogapp.network.BreedRemoteImp
 import com.brunoponte.dogapp.network.IRequestService
+import com.brunoponte.dogapp.network.Util
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+object RemoteModule {
 
     @Singleton
     @Provides
@@ -24,4 +26,9 @@ class AppModule {
             .create(IRequestService::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideBreedRemote(breedRemote: BreedRemoteImp): BreedRemote {
+        return breedRemote
+    }
 }
