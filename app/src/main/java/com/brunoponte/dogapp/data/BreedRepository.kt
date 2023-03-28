@@ -18,51 +18,33 @@ constructor(
     private val dataSourceFactory: BreedDataSourceFactory
 ) : IBreedRepository {
 
-    override suspend fun getBreeds(pageSize: Int, page: Int, order: SortMode): Response<List<Breed>> {
-        val networkResponse =
-            try {
-                val breeds = dataSourceFactory.getRemoteDataSource().getBreeds(pageSize, page, order)
-                // Insert into cache
-                dataSourceFactory.getCacheDataSource().saveBreeds(breeds)
-                Response.Success(breeds)
-            } catch (exception: Exception) {
-                // There was an issue
-                exception.printStackTrace()
-                Log.e("NetworkLayer", exception.message, exception)
-                Response.Error(exception)
-            }
-
-        if (networkResponse is Response.Success
-            || !dataSourceFactory.getCacheDataSource().isCached()) {
-            return networkResponse
+    override suspend fun getBreeds(pageSize: Int, page: Int, order: SortMode): Response<List<Breed>> =
+        try {
+            // Get breeds
+            val breeds = dataSourceFactory.getDataStore().getBreeds(pageSize, page, order)
+            // Save breeds
+            dataSourceFactory.getCacheDataSource().saveBreeds(breeds)
+            Response.Success(breeds)
+        } catch (exception: Exception) {
+            // There was an issue
+            exception.printStackTrace()
+            Log.e("NetworkLayer", exception.message, exception)
+            Response.Error(exception)
         }
 
-        // If any error occurred, return the breeds stored in the cache
-        return Response.Success(dataSourceFactory.getCacheDataSource().getBreeds(pageSize, page, order))
-    }
-
-    override suspend fun searchBreeds(query: String): Response<List<Breed>> {
-        val networkResponse =
-            try {
-                val breeds = dataSourceFactory.getRemoteDataSource().searchBreeds(query)
-                // Insert into cache
-                dataSourceFactory.getCacheDataSource().saveBreeds(breeds)
-                Response.Success(breeds)
-            } catch (exception: Exception) {
-                // There was an issue
-                exception.printStackTrace()
-                Log.e("NetworkLayer", exception.message, exception)
-                Response.Error(exception)
-            }
-
-        if (networkResponse is Response.Success
-            || !dataSourceFactory.getCacheDataSource().isCached()) {
-            return networkResponse
+    override suspend fun searchBreeds(query: String): Response<List<Breed>> =
+        try {
+            // Get breeds
+            val breeds = dataSourceFactory.getDataStore().searchBreeds(query)
+            // Insert into cache
+            dataSourceFactory.getCacheDataSource().saveBreeds(breeds)
+            Response.Success(breeds)
+        } catch (exception: Exception) {
+            // There was an issue
+            exception.printStackTrace()
+            Log.e("NetworkLayer", exception.message, exception)
+            Response.Error(exception)
         }
-
-        // If any error occurred, return the breeds stored in the cache
-        return Response.Success(dataSourceFactory.getCacheDataSource().searchBreeds(query))
-    }
 
     override suspend fun getBreed(id: Int): Response<Breed?> =
         try {

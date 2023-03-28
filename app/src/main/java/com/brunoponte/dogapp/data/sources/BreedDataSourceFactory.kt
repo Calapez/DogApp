@@ -12,8 +12,8 @@ constructor(
     private val remoteDataSource: BreedRemoteDataSource
 ) {
     // TODO Use this and maker other methods private.
-    open suspend fun getDataStore(isCached: Boolean): BreedDataSource {
-        return if (isCached && !breedCache.isExpired()) {
+    open suspend fun getDataStore(): BreedDataSource {
+        return if (breedCache.isCached() && !breedCache.isExpired()) {
             getCacheDataSource()
         } else {
             getRemoteDataSource()

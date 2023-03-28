@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.brunoponte.dogapp.cache.BreedCacheImp
 import com.brunoponte.dogapp.cache.daos.BreedDao
 import com.brunoponte.dogapp.cache.database.AppDatabase
+import com.brunoponte.dogapp.cache.utils.CachePreferencesHelper
 import com.brunoponte.dogapp.data.BreedCache
 import dagger.Module
 import dagger.Provides
@@ -40,6 +41,12 @@ class CacheModule {
     @Singleton
     fun provideBreedCache(breedCache: BreedCacheImp): BreedCache {
         return breedCache
+    }
+
+    @Provides
+    @Singleton
+    fun providePreferenceHelper(@ApplicationContext context: Context): CachePreferencesHelper {
+        return CachePreferencesHelper(context)
     }
 
 }
