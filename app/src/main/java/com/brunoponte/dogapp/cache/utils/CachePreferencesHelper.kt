@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import javax.inject.Inject
 
-// TODO Move to DI to remove Context from cache layer
 open class CachePreferencesHelper
 @Inject
 constructor(context: Context) {

@@ -2,11 +2,11 @@ package com.brunoponte.dogapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.brunoponte.dogapp.cache.BreedCacheImp
+import com.brunoponte.dogapp.cache.BreedCache
 import com.brunoponte.dogapp.cache.daos.BreedDao
 import com.brunoponte.dogapp.cache.database.AppDatabase
 import com.brunoponte.dogapp.cache.utils.CachePreferencesHelper
-import com.brunoponte.dogapp.data.BreedCache
+import com.brunoponte.dogapp.data.IBreedCache
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,7 +39,7 @@ class CacheModule {
 
     @Provides
     @Singleton
-    fun provideBreedCache(breedCache: BreedCacheImp): BreedCache {
+    fun provideBreedCache(breedCache: BreedCache): IBreedCache {
         return breedCache
     }
 

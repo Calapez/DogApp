@@ -1,7 +1,7 @@
 package com.brunoponte.dogapp.data.sources
 
-import com.brunoponte.dogapp.data.BreedDataSource
-import com.brunoponte.dogapp.data.BreedRemote
+import com.brunoponte.dogapp.data.IBreedDataSource
+import com.brunoponte.dogapp.data.IBreedRemote
 import com.brunoponte.dogapp.domain.models.Breed
 import com.brunoponte.dogapp.presentation.breedList.SortMode
 import javax.inject.Inject
@@ -9,8 +9,8 @@ import javax.inject.Inject
 class BreedRemoteDataSource
 @Inject
 constructor(
-    private val breedRemote: BreedRemote
-) : BreedDataSource {
+    private val breedRemote: IBreedRemote
+) : IBreedDataSource {
 
     override suspend fun getBreeds(pageSize: Int, page: Int, order: SortMode): List<Breed> {
         return breedRemote.getBreeds(pageSize, page, order)

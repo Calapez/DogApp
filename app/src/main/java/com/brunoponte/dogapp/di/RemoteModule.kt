@@ -1,7 +1,7 @@
 package com.brunoponte.dogapp.di
 
-import com.brunoponte.dogapp.data.BreedRemote
-import com.brunoponte.dogapp.network.BreedRemoteImp
+import com.brunoponte.dogapp.data.IBreedRemote
+import com.brunoponte.dogapp.network.BreedRemote
 import com.brunoponte.dogapp.network.IRequestService
 import com.brunoponte.dogapp.network.Util
 import dagger.Module
@@ -28,7 +28,7 @@ object RemoteModule {
 
     @Provides
     @Singleton
-    fun provideBreedRemote(breedRemote: BreedRemoteImp): BreedRemote {
+    fun provideBreedRemote(breedRemote: BreedRemote): IBreedRemote {
         return breedRemote
     }
 }

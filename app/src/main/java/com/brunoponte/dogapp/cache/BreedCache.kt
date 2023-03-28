@@ -3,15 +3,15 @@ package com.brunoponte.dogapp.cache
 import com.brunoponte.dogapp.cache.daos.BreedDao
 import com.brunoponte.dogapp.cache.models.BreedEntityMapper
 import com.brunoponte.dogapp.cache.utils.CachePreferencesHelper
-import com.brunoponte.dogapp.data.BreedCache
+import com.brunoponte.dogapp.data.IBreedCache
 import com.brunoponte.dogapp.domain.models.Breed
 import com.brunoponte.dogapp.presentation.breedList.SortMode
 import javax.inject.Inject
 
-class BreedCacheImp @Inject constructor(
+class BreedCache @Inject constructor(
     private val breedDao: BreedDao,
     private val preferencesHelper: CachePreferencesHelper
-) : BreedCache {
+) : IBreedCache {
 
     override suspend fun getBreeds(pageSize: Int, page: Int, order: SortMode): List<Breed> {
         val breeds = when(order) {

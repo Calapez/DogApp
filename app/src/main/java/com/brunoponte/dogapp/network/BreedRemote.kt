@@ -1,16 +1,16 @@
 package com.brunoponte.dogapp.network
 
-import com.brunoponte.dogapp.data.BreedRemote
+import com.brunoponte.dogapp.data.IBreedRemote
 import com.brunoponte.dogapp.domain.models.Breed
 import com.brunoponte.dogapp.network.models.BreedDtoMapper
 import com.brunoponte.dogapp.presentation.breedList.SortMode
 import javax.inject.Inject
 
-class BreedRemoteImp
+class BreedRemote
 @Inject
 constructor(
     private val requestService: IRequestService
-) : BreedRemote {
+) : IBreedRemote {
 
     override suspend fun getBreeds(pageSize: Int, page: Int, order: SortMode): List<Breed> {
         return BreedDtoMapper.toDomainModelList(

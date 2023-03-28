@@ -90,7 +90,7 @@ constructor(
     }
 
     private fun getNextPage() {
-        CoroutineScope(dispatcher).launch {
+        viewModelScope.launch(dispatcher) {
             if (reachedEndOfList()) {
                 val currentBreeds = ArrayList(_viewStateBreeds)
 
