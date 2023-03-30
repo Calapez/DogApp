@@ -37,6 +37,7 @@ interface BreedDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBreeds(repos: List<BreedEntity>): LongArray
 
+    // TODO Delete? No longer used
     @Query("SELECT (SELECT COUNT(*) FROM breeds) == 0")
     suspend fun isEmpty(): Boolean
 

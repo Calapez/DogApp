@@ -2,16 +2,16 @@ package com.brunoponte.dogapp.data.sources
 
 import com.brunoponte.dogapp.data.IBreedCache
 import com.brunoponte.dogapp.data.IBreedDataSource
+import com.brunoponte.dogapp.domain.Page
 import com.brunoponte.dogapp.domain.models.Breed
-import com.brunoponte.dogapp.presentation.breedList.SortMode
 import javax.inject.Inject
 
 class BreedCacheDataSource @Inject constructor(
     private val breedCache: IBreedCache
 ) : IBreedDataSource {
 
-    override suspend fun getBreeds(pageSize: Int, page: Int, order: SortMode): List<Breed> {
-        return breedCache.getBreeds(pageSize, page, order)
+    override suspend fun getBreeds(page: Page): List<Breed> {
+        return breedCache.getBreeds(page)
     }
 
     override suspend fun searchBreeds(query: String): List<Breed> {
@@ -27,7 +27,7 @@ class BreedCacheDataSource @Inject constructor(
         breedCache.setLastCacheTime(System.currentTimeMillis())
     }
 
-    override suspend fun isCached(): Boolean {
-        return breedCache.isCached()
+    override suspend fun isPageCached(page: Page): Boolean {
+        return breedCache.isPageCached(page)
     }
 }

@@ -4,6 +4,7 @@ import com.brunoponte.dogapp.cache.daos.BreedDao
 import com.brunoponte.dogapp.cache.models.BreedEntityMapper
 import com.brunoponte.dogapp.cache.utils.CachePreferencesHelper
 import com.brunoponte.dogapp.data.IBreedCache
+import com.brunoponte.dogapp.domain.Page
 import com.brunoponte.dogapp.domain.models.Breed
 import com.brunoponte.dogapp.presentation.breedList.SortMode
 import javax.inject.Inject
@@ -13,10 +14,10 @@ class BreedCache @Inject constructor(
     private val preferencesHelper: CachePreferencesHelper
 ) : IBreedCache {
 
-    override suspend fun getBreeds(pageSize: Int, page: Int, order: SortMode): List<Breed> {
-        val breeds = when(order) {
-            SortMode.ASC -> breedDao.getBreedsAsc(pageSize = pageSize, page = page)
-            SortMode.DESC -> breedDao.getBreedsDesc(pageSize = pageSize, page = page)
+    override suspend fun getBreeds(page: Page): List<Breed> {
+        val breeds = when(page.order) {
+            SortMode.ASC -> breedDao.getBreedsAsc(page.size, page.page)
+            SortMode.DESC -> breedDao.getBreedsDesc(page.size, page.page)
         }
         return BreedEntityMapper.toDomainModelList(breeds)
     }
@@ -34,8 +35,8 @@ class BreedCache @Inject constructor(
         breedDao.insertBreeds(BreedEntityMapper.toEntityList(breeds))
     }
 
-    override suspend fun isCached(): Boolean {
-        return !breedDao.isEmpty()
+    override suspend fun isPageCached(page: Page): Boolean {
+        return getBreeds(page).isNotEmpty()
     }
 
     override suspend fun setLastCacheTime(lastCache: Long) {

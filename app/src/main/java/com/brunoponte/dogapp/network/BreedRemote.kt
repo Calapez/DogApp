@@ -1,6 +1,7 @@
 package com.brunoponte.dogapp.network
 
 import com.brunoponte.dogapp.data.IBreedRemote
+import com.brunoponte.dogapp.domain.Page
 import com.brunoponte.dogapp.domain.models.Breed
 import com.brunoponte.dogapp.network.models.BreedDtoMapper
 import com.brunoponte.dogapp.presentation.breedList.SortMode
@@ -12,9 +13,9 @@ constructor(
     private val requestService: IRequestService
 ) : IBreedRemote {
 
-    override suspend fun getBreeds(pageSize: Int, page: Int, order: SortMode): List<Breed> {
+    override suspend fun getBreeds(page: Page): List<Breed> {
         return BreedDtoMapper.toDomainModelList(
-            requestService.getBreeds(pageSize, page, getSortModeString(order)))
+            requestService.getBreeds(page.size, page.page, getSortModeString(page.order)))
     }
 
     override suspend fun searchBreeds(query: String): List<Breed> {

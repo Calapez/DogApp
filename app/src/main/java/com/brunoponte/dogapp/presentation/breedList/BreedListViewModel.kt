@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.brunoponte.dogapp.domain.Page
 import com.brunoponte.dogapp.domain.Response
 import com.brunoponte.dogapp.domain.useCases.BreedListPageUseCase
 import com.brunoponte.dogapp.presentation.BreedItemViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,7 +46,8 @@ constructor(
 
         viewModelScope.launch(dispatcher) {
             _viewState.postValue(BreedListViewState.Loading)
-            val response = breedListPageUseCase.execute(PAGE_SIZE, 0, sortMode.value!!)
+            val response = breedListPageUseCase.execute(
+                Page(PAGE_SIZE, 0, sortMode.value!!))
             page += 1
             when (response) {
                 is Response.Success -> _viewState.postValue(BreedListViewState
@@ -98,7 +99,8 @@ constructor(
 
                 // Prevents this to be called on first page load
                 if (page > 0) {
-                    val response = breedListPageUseCase.execute(PAGE_SIZE, page, sortMode.value!!)
+                    val response = breedListPageUseCase.execute(
+                        Page(PAGE_SIZE, page, sortMode.value!!))
 
                     when (response) {
                         is Response.Success -> {

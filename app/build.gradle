@@ -129,4 +129,7 @@ dependencies {
 
     def fragment_version = "1.5.3"
     debugImplementation("androidx.fragment:fragment-testing:$fragment_version")
+
+    // debugImplementation because LeakCanary should only run in debug builds.
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
 }

@@ -2,8 +2,8 @@ package com.brunoponte.dogapp.data.sources
 
 import com.brunoponte.dogapp.data.IBreedDataSource
 import com.brunoponte.dogapp.data.IBreedRemote
+import com.brunoponte.dogapp.domain.Page
 import com.brunoponte.dogapp.domain.models.Breed
-import com.brunoponte.dogapp.presentation.breedList.SortMode
 import javax.inject.Inject
 
 class BreedRemoteDataSource
@@ -12,8 +12,8 @@ constructor(
     private val breedRemote: IBreedRemote
 ) : IBreedDataSource {
 
-    override suspend fun getBreeds(pageSize: Int, page: Int, order: SortMode): List<Breed> {
-        return breedRemote.getBreeds(pageSize, page, order)
+    override suspend fun getBreeds(page: Page): List<Breed> {
+        return breedRemote.getBreeds(page)
     }
 
     override suspend fun searchBreeds(query: String): List<Breed> {
@@ -28,7 +28,7 @@ constructor(
         throw UnsupportedOperationException("Save character is not supported for RemoteDataSource.")
     }
 
-    override suspend fun isCached(): Boolean {
+    override suspend fun isPageCached(page: Page): Boolean {
         throw UnsupportedOperationException("Cache is not supported for RemoteDataSource.")
     }
 }
