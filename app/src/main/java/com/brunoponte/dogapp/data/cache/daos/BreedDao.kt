@@ -1,10 +1,10 @@
-package com.brunoponte.dogapp.cache.daos
+package com.brunoponte.dogapp.data.cache.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.brunoponte.dogapp.cache.models.BreedEntity
+import com.brunoponte.dogapp.data.cache.models.BreedEntity
 
 @Dao
 interface BreedDao {

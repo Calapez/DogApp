@@ -1,7 +1,7 @@
 package com.brunoponte.dogapp.di
 
 import com.brunoponte.dogapp.repository.FakeBreedRepository
-import com.brunoponte.dogapp.domain.repository.IBreedRepository
+import com.brunoponte.dogapp.domain.repositories.IBreedRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.components.SingletonComponent

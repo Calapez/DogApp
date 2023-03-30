@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.brunoponte.dogapp.databinding.BreedListItemGridBinding
 import com.brunoponte.dogapp.databinding.BreedListItemLinearBinding
-import com.brunoponte.dogapp.presentation.BreedItemViewState
+import com.brunoponte.dogapp.presentation.BreedUiItem
 import com.brunoponte.dogapp.presentation.breedList.ListMode
 
 interface BreedListInteraction {
@@ -19,7 +19,7 @@ interface BreedListInteraction {
 class BreedListAdapter(
     private val interaction: BreedListInteraction,
     var listMode: ListMode
-) : ListAdapter<BreedItemViewState, BreedListItemViewHolder>(BreedListAdapter) {
+) : ListAdapter<BreedUiItem, BreedListItemViewHolder>(BreedListAdapter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BreedListItemViewHolder {
         val view: View = if (listMode == ListMode.LINEAR) {
@@ -36,13 +36,13 @@ class BreedListAdapter(
         interaction.onIndexReached(position)
     }
 
-    private companion object : DiffUtil.ItemCallback<BreedItemViewState>() {
+    private companion object : DiffUtil.ItemCallback<BreedUiItem>() {
 
-        override fun areItemsTheSame(oldItem: BreedItemViewState, newItem: BreedItemViewState): Boolean {
+        override fun areItemsTheSame(oldItem: BreedUiItem, newItem: BreedUiItem): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: BreedItemViewState, newItem: BreedItemViewState): Boolean {
+        override fun areContentsTheSame(oldItem: BreedUiItem, newItem: BreedUiItem): Boolean {
             return oldItem == newItem
         }
     }

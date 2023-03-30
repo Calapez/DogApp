@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.brunoponte.dogapp.R
 import com.brunoponte.dogapp.databinding.FragmentBreedListBinding
+import com.brunoponte.dogapp.domain.SortMode
 import com.brunoponte.dogapp.presentation.breedList.listAdapter.BreedListAdapter
 import com.brunoponte.dogapp.presentation.breedList.listAdapter.BreedListInteraction
 import dagger.hilt.android.AndroidEntryPoint

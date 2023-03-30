@@ -1,8 +1,8 @@
 package com.brunoponte.dogapp.repository
 
-import com.brunoponte.dogapp.domain.repository.IBreedRepository
+import com.brunoponte.dogapp.domain.repositories.IBreedRepository
 import com.brunoponte.dogapp.domain.models.Breed
-import com.brunoponte.dogapp.presentation.breedList.SortMode
+import com.brunoponte.dogapp.domain.SortMode
 import javax.inject.Inject
 
 /**

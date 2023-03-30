@@ -1,7 +1,6 @@
-package com.brunoponte.dogapp.data.sources
+package com.brunoponte.dogapp.data.dataSources
 
-import com.brunoponte.dogapp.data.IBreedDataSource
-import com.brunoponte.dogapp.data.IBreedRemote
+import com.brunoponte.dogapp.data.network.IBreedRemote
 import com.brunoponte.dogapp.domain.Page
 import com.brunoponte.dogapp.domain.models.Breed
 import javax.inject.Inject

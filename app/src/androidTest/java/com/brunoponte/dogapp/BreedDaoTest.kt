@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.brunoponte.dogapp.cache.daos.BreedDao
-import com.brunoponte.dogapp.cache.database.AppDatabase
-import com.brunoponte.dogapp.cache.models.BreedEntity
+import com.brunoponte.dogapp.data.cache.daos.BreedDao
+import com.brunoponte.dogapp.data.cache.database.AppDatabase
+import com.brunoponte.dogapp.data.cache.models.BreedEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals

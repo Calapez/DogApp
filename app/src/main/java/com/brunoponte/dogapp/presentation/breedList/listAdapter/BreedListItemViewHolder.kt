@@ -6,8 +6,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.brunoponte.dogapp.R
-import com.brunoponte.dogapp.network.Util
-import com.brunoponte.dogapp.presentation.BreedItemViewState
+import com.brunoponte.dogapp.data.network.utils.Endpoints
+import com.brunoponte.dogapp.presentation.BreedUiItem
 import com.bumptech.glide.Glide
 
 class BreedListItemViewHolder(
@@ -15,7 +15,7 @@ class BreedListItemViewHolder(
     private val interaction: BreedListInteraction
 ) : RecyclerView.ViewHolder(view) {
 
-    fun bind(breed: BreedItemViewState, position: Int) {
+    fun bind(breed: BreedUiItem, position: Int) {
         val notApplicableText = itemView.context.getString(R.string.not_applicable)
 
         val breedImageView: ImageView = view.findViewById(R.id.breedImage)
@@ -26,7 +26,7 @@ class BreedListItemViewHolder(
             breedImageView.setImageResource(R.drawable.ic_no_image)
         } else {
             Glide.with(itemView.context)
-                .load(String.format(Util.dogImageApiUrlTemplate, breed.referenceImageId))
+                .load(String.format(Endpoints.dogImageApiEndpointTemplate, breed.referenceImageId))
                 .placeholder(R.drawable.ic_loading)
                 .error(R.drawable.ic_no_image)
                 .centerCrop()

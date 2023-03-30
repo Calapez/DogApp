@@ -1,4 +1,4 @@
-package com.brunoponte.dogapp.network.models
+package com.brunoponte.dogapp.data.network.models
 
 import com.brunoponte.dogapp.domain.models.Breed
 

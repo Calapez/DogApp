@@ -1,4 +1,4 @@
-package com.brunoponte.dogapp.cache.models
+package com.brunoponte.dogapp.data.cache.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

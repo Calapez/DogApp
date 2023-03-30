@@ -1,12 +1,11 @@
-package com.brunoponte.dogapp.cache
+package com.brunoponte.dogapp.data.cache
 
-import com.brunoponte.dogapp.cache.daos.BreedDao
-import com.brunoponte.dogapp.cache.models.BreedEntityMapper
-import com.brunoponte.dogapp.cache.utils.CachePreferencesHelper
-import com.brunoponte.dogapp.data.IBreedCache
+import com.brunoponte.dogapp.data.cache.daos.BreedDao
+import com.brunoponte.dogapp.data.cache.models.BreedEntityMapper
+import com.brunoponte.dogapp.data.cache.utils.CachePreferencesHelper
 import com.brunoponte.dogapp.domain.Page
 import com.brunoponte.dogapp.domain.models.Breed
-import com.brunoponte.dogapp.presentation.breedList.SortMode
+import com.brunoponte.dogapp.domain.SortMode
 import javax.inject.Inject
 
 class BreedCache @Inject constructor(

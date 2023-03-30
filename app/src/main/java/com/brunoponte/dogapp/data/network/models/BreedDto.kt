@@ -1,4 +1,4 @@
-package com.brunoponte.dogapp.network.models
+package com.brunoponte.dogapp.data.network.models
 
 import com.google.gson.annotations.SerializedName
 

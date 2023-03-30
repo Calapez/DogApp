@@ -1,9 +1,9 @@
 package com.brunoponte.dogapp.di
 
-import com.brunoponte.dogapp.data.IBreedRemote
-import com.brunoponte.dogapp.network.BreedRemote
-import com.brunoponte.dogapp.network.IRequestService
-import com.brunoponte.dogapp.network.Util
+import com.brunoponte.dogapp.data.network.IBreedRemote
+import com.brunoponte.dogapp.data.network.BreedRemote
+import com.brunoponte.dogapp.data.network.IRequestService
+import com.brunoponte.dogapp.data.network.utils.Endpoints
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +20,7 @@ object RemoteModule {
     @Provides
     fun provideRequestService() : IRequestService {
         return Retrofit.Builder()
-            .baseUrl(Util.dogApiUrl)
+            .baseUrl(Endpoints.dogApiEndpoint)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(IRequestService::class.java)

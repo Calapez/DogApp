@@ -1,10 +1,9 @@
-package com.brunoponte.dogapp.network
+package com.brunoponte.dogapp.data.network
 
-import com.brunoponte.dogapp.data.IBreedRemote
 import com.brunoponte.dogapp.domain.Page
 import com.brunoponte.dogapp.domain.models.Breed
-import com.brunoponte.dogapp.network.models.BreedDtoMapper
-import com.brunoponte.dogapp.presentation.breedList.SortMode
+import com.brunoponte.dogapp.data.network.models.BreedDtoMapper
+import com.brunoponte.dogapp.domain.SortMode
 import javax.inject.Inject
 
 class BreedRemote

@@ -7,14 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.motion.utils.ViewState
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.brunoponte.dogapp.R
 import com.brunoponte.dogapp.databinding.FragmentBreedDetailsBinding
-import com.brunoponte.dogapp.domain.models.Breed
-import com.brunoponte.dogapp.network.Util
+import com.brunoponte.dogapp.data.network.utils.Endpoints
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,7 +60,7 @@ class BreedDetailsFragment : Fragment() {
                     val notApplicableText = getString(R.string.not_applicable)
 
                     Glide.with(this)
-                        .load(String.format(Util.dogImageApiUrlTemplate, it.referenceImageId))
+                        .load(String.format(Endpoints.dogImageApiEndpointTemplate, it.referenceImageId))
                         .placeholder(R.drawable.ic_loading)
                         .error(R.drawable.ic_no_image)
                         .into(binding.breedImage)

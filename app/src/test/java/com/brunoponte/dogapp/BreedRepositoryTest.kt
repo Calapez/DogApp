@@ -1,14 +1,14 @@
 package com.brunoponte.dogapp
 
-import com.brunoponte.dogapp.cache.daos.BreedDao
-import com.brunoponte.dogapp.cache.models.BreedEntity
-import com.brunoponte.dogapp.cache.models.BreedEntityMapper
+import com.brunoponte.dogapp.data.cache.daos.BreedDao
+import com.brunoponte.dogapp.data.cache.models.BreedEntity
+import com.brunoponte.dogapp.data.cache.models.BreedEntityMapper
 import com.brunoponte.dogapp.domain.models.Breed
-import com.brunoponte.dogapp.network.IRequestService
-import com.brunoponte.dogapp.network.models.BreedDto
-import com.brunoponte.dogapp.network.models.BreedDtoMapper
-import com.brunoponte.dogapp.data.BreedRepository
-import com.brunoponte.dogapp.presentation.breedList.SortMode
+import com.brunoponte.dogapp.data.network.IRequestService
+import com.brunoponte.dogapp.data.network.models.BreedDto
+import com.brunoponte.dogapp.data.network.models.BreedDtoMapper
+import com.brunoponte.dogapp.data.repositories.BreedRepository
+import com.brunoponte.dogapp.domain.SortMode
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.Before

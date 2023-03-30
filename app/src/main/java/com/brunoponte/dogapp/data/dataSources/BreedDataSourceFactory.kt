@@ -1,7 +1,6 @@
-package com.brunoponte.dogapp.data.sources
+package com.brunoponte.dogapp.data.dataSources
 
-import com.brunoponte.dogapp.data.IBreedCache
-import com.brunoponte.dogapp.data.IBreedDataSource
+import com.brunoponte.dogapp.data.cache.IBreedCache
 import javax.inject.Inject
 
 open class BreedDataSourceFactory

@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.brunoponte.dogapp.domain.Page
 import com.brunoponte.dogapp.domain.Response
+import com.brunoponte.dogapp.domain.SortMode
 import com.brunoponte.dogapp.domain.useCases.BreedListPageUseCase
-import com.brunoponte.dogapp.presentation.BreedItemViewState
+import com.brunoponte.dogapp.presentation.BreedUiItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -34,7 +35,7 @@ constructor(
     val viewState: LiveData<BreedListViewState>
         get() = _viewState
 
-    private val _viewStateBreeds: List<BreedItemViewState>
+    private val _viewStateBreeds: List<BreedUiItem>
         get() = (_viewState.value as? BreedListViewState.Content)?.breeds ?: listOf()
 
     fun getFirstBreeds(force: Boolean = false) {
@@ -52,7 +53,7 @@ constructor(
             when (response) {
                 is Response.Success -> _viewState.postValue(BreedListViewState
                     .Content(response.data.map {
-                        BreedItemViewState(
+                        BreedUiItem(
                             it.id,
                             it.name,
                             it.breedGroup,
@@ -106,7 +107,7 @@ constructor(
                         is Response.Success -> {
                             // Append breeds
                             currentBreeds.addAll(response.data.map {
-                                BreedItemViewState(
+                                BreedUiItem(
                                     it.id,
                                     it.name,
                                     it.breedGroup,
@@ -116,7 +117,7 @@ constructor(
                             })
 
                             _viewState.postValue(BreedListViewState.Content(currentBreeds.map {
-                                BreedItemViewState(
+                                BreedUiItem(
                                     it.id,
                                     it.name,
                                     it.breedGroup,

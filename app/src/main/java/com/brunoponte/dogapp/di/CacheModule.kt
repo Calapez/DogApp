@@ -2,11 +2,11 @@ package com.brunoponte.dogapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.brunoponte.dogapp.cache.BreedCache
-import com.brunoponte.dogapp.cache.daos.BreedDao
-import com.brunoponte.dogapp.cache.database.AppDatabase
-import com.brunoponte.dogapp.cache.utils.CachePreferencesHelper
-import com.brunoponte.dogapp.data.IBreedCache
+import com.brunoponte.dogapp.data.cache.BreedCache
+import com.brunoponte.dogapp.data.cache.daos.BreedDao
+import com.brunoponte.dogapp.data.cache.database.AppDatabase
+import com.brunoponte.dogapp.data.cache.utils.CachePreferencesHelper
+import com.brunoponte.dogapp.data.cache.IBreedCache
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

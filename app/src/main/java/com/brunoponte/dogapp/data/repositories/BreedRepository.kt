@@ -1,10 +1,10 @@
-package com.brunoponte.dogapp.data
+package com.brunoponte.dogapp.data.repositories
 
 import android.util.Log
-import com.brunoponte.dogapp.data.sources.BreedDataSourceFactory
+import com.brunoponte.dogapp.data.dataSources.BreedDataSourceFactory
 import com.brunoponte.dogapp.domain.Page
 import com.brunoponte.dogapp.domain.Response
-import com.brunoponte.dogapp.domain.repository.IBreedRepository
+import com.brunoponte.dogapp.domain.repositories.IBreedRepository
 import com.brunoponte.dogapp.domain.models.Breed
 import javax.inject.Inject
 

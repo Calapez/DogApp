@@ -1,9 +1,7 @@
 package com.brunoponte.dogapp.di
 
-import com.brunoponte.dogapp.cache.daos.BreedDao
-import com.brunoponte.dogapp.network.IRequestService
-import com.brunoponte.dogapp.data.BreedRepository
-import com.brunoponte.dogapp.domain.repository.IBreedRepository
+import com.brunoponte.dogapp.data.repositories.BreedRepository
+import com.brunoponte.dogapp.domain.repositories.IBreedRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

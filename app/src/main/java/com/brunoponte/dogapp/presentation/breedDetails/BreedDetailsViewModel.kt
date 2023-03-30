@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.brunoponte.dogapp.domain.Response
 import com.brunoponte.dogapp.domain.useCases.BreedDetailsUseCase
-import com.brunoponte.dogapp.presentation.BreedItemViewState
-import com.brunoponte.dogapp.presentation.breedSearchList.BreedSearchListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

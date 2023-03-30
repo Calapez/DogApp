@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.brunoponte.dogapp.domain.Response
 import com.brunoponte.dogapp.domain.useCases.BreedSearchListUseCase
-import com.brunoponte.dogapp.presentation.BreedItemViewState
-import com.brunoponte.dogapp.presentation.breedList.BreedListViewState
+import com.brunoponte.dogapp.presentation.BreedUiItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -36,7 +35,7 @@ constructor(
             when (response) {
                 is Response.Success -> _viewState.postValue(BreedSearchListViewState
                     .Content(response.data.map {
-                        BreedItemViewState(
+                        BreedUiItem(
                             it.id,
                             it.name,
                             it.breedGroup,

@@ -1,6 +1,6 @@
 package com.brunoponte.dogapp.domain.useCases
 
-import com.brunoponte.dogapp.domain.repository.IBreedRepository
+import com.brunoponte.dogapp.domain.repositories.IBreedRepository
 import javax.inject.Inject
 
 class BreedSearchListUseCase

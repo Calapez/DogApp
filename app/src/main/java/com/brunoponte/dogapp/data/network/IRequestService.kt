@@ -1,6 +1,6 @@
-package com.brunoponte.dogapp.network
+package com.brunoponte.dogapp.data.network
 
-import com.brunoponte.dogapp.network.models.BreedDto
+import com.brunoponte.dogapp.data.network.models.BreedDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 

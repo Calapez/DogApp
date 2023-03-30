@@ -1,4 +1,4 @@
-package com.brunoponte.dogapp.cache.utils
+package com.brunoponte.dogapp.data.cache.utils
 
 import android.content.Context
 import android.content.SharedPreferences

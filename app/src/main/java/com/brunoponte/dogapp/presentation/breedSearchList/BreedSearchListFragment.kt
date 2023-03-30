@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.brunoponte.dogapp.databinding.FragmentBreedSearchListBinding
+import com.brunoponte.dogapp.presentation.BreedUiItem
 import com.brunoponte.dogapp.presentation.breedSearchList.listAdapter.BreedSearchListAdapter
 import com.brunoponte.dogapp.presentation.breedSearchList.listAdapter.BreedSearchListInteraction
 import dagger.hilt.android.AndroidEntryPoint
